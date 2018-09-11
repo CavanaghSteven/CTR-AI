@@ -31,20 +31,23 @@ test_files = files[-int(len(files) * split_ratio):]
 def generate_data(train_files, dataset_length):
     while True:
         for i in range(dataset_length):
+
             data = np.load(train_files[i])
+            np.random.shuffle(data)
 
             X = np.array([i[0] for i in data]).reshape(-1, WIDTH, HEIGHT, 1)
             X = X / 255
             y = np.array([i[1] for i in data])
             yield X, y
 
+lr = 0.0001
 
-nn = model_simple(WIDTH, WIDTH, 0.01, 3)
+nn = model_simple(WIDTH, WIDTH, lr, 3)
 
 train_gen = generate_data(train_files, len(train_files))
 test_gen = generate_data(test_files, len(test_files))
 
-model_name = 'adam-{}.model'.format(int(time.time()))
+model_name = 'adam-{}_largernet-{}.model'.format(int(time.time()), lr)
 # model_name = 'adam-{}'.format('binary_crossent')
 
 reducelrcallback = keras.callbacks.ReduceLROnPlateau(
@@ -52,7 +55,7 @@ reducelrcallback = keras.callbacks.ReduceLROnPlateau(
     verbose=1,
     factor=0.1,
     patience=5,
-    min_delta=0.001,
+    min_delta=0.000001,
     min_lr=0)
 
 tensorboard = keras.callbacks.TensorBoard(
@@ -74,5 +77,5 @@ nn.fit_generator(
     validation_data=test_gen,
     steps_per_epoch=len(train_files),
     validation_steps=len(test_files),
-    epochs=10,
+    epochs=20,
     callbacks=[tensorboard, checkpoint, reducelrcallback])

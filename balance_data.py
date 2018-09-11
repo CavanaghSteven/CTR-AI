@@ -11,7 +11,7 @@ if not os.path.exists('balanced_data'):
 files = glob('data/*npy')
 np.random.shuffle(files)
 
-NEW_FILE_SIZE = 33
+NEW_FILE_SIZE = 15
 assert NEW_FILE_SIZE % 3 == 0
 
 
@@ -26,7 +26,7 @@ def batch(iterable, n=1):
 
 p = 0
 
-for x in batch(range(0, len(files)), 10):
+for x in batch(range(0, len(files)), 100):
 
     forwards_data = []
     rights_data = []

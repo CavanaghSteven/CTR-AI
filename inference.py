@@ -15,7 +15,7 @@ paused = True
 # paused = False
 
 game = Game(window_name="ePSXe - Enhanced PSX emulator", width=WIDTH, height=HEIGHT)
-nn = load_model('models/weights-adam-binary_crossent-lr-callback-mindelta0.01.hdf5')
+nn = load_model('models/weights-adam-1536683747_largernet.model.hdf5')
 
 print('Starting inference!...')
 print('Pausing!')

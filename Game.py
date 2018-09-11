@@ -97,11 +97,11 @@ class Game:
             print('forwards')
             go_forwards()
         elif choice == 1:
-            print('right')
-            turn_right()
-        elif choice == 2:
             print('left')
             turn_left()
+        elif choice == 2:
+            print('right')
+            turn_right()
         else:
             print('something happened')
 
